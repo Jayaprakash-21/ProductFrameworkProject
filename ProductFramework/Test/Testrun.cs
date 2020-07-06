@@ -23,6 +23,12 @@ namespace ProductFramework.Test
             fp.feedback();
 
         }
+        [Test]
+        public void Test2()
+        {
+            sp.signinpage("prakash778@gmail.com", "123456");
+
+        }
  
         static void Main(String[] args)
         {
