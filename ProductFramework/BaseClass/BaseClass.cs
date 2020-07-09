@@ -6,6 +6,7 @@ using ProductFrameworkProject.Pages;
 using RelevantCodes.ExtentReports;
 using System;
 using NUnit.Framework.Interfaces;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ProductFramework
 {
@@ -33,7 +34,11 @@ namespace ProductFramework
         {
 
             //Append the html report file to current project path
+            //To obtain the current solution path/project path
 
+            string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+            string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+            string projectPath = new Uri(actualPath).LocalPath;
             string reportPath = "C:\\Users\\Jay\\source\\repos\\ProductFramework\\ProductFramework\\Reports\\TestRunReport.html";
             //Boolean value for replacing exisisting report
             extent = new ExtentReports(reportPath, true);
@@ -43,6 +48,7 @@ namespace ProductFramework
                 .AddSystemInfo("Username", "YourUserName");
             //Adding config.xml file
             extent.LoadConfig("Extent-config.xml"); //Get the config.xml file from http://extentreports.com
+
             //launch driver and initiate browser
             driver = new ChromeDriver();
             driver.Url = "http://localhost/product/";
@@ -54,7 +60,7 @@ namespace ProductFramework
             fp = new FeedbackPage(driver);
         }
 
-     //   [TearDown]
+        [TearDown]
         public void AfterClass()
         {
             Console.WriteLine("-------");
@@ -66,7 +72,7 @@ namespace ProductFramework
             {
                 string currentDate = DateTime.Now.ToString("HHmmss");
                 var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-                screenshot.SaveAsFile("C:\\Users\\Jay\\source\\repos\\ProductFramework\\ProductFramework\\Screenshot\\failedSS" + currentDate + ".png", ScreenshotImageFormat.Png);
+                screenshot.SaveAsFile("C:\\Users\\Jay\\source\\repos\\ProductFramework\\ProductFramework\\Screenshot\\"  + currentDate + ".png", ScreenshotImageFormat.Png); //
                 test.Log(LogStatus.Fail, status + errorMessage+ test.AddScreenCapture("C:\\Users\\Jay\\source\\repos\\ProductFramework\\ProductFramework\\Screenshot\\failedSS"));
             }
             //End test report
@@ -80,8 +86,9 @@ namespace ProductFramework
         {
             driver.Quit();
             //End Report
-            extent.Flush();
             extent.Close();
+            extent.Flush();
+            
         }
         
         

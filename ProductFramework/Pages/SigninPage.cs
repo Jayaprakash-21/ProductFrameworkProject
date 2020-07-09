@@ -30,8 +30,6 @@ namespace ProductFrameworkProject.Pages
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
-
-
         }
 
         public void signinpage(String un,String pwd)

@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using ProductFramework.Pages;
 using ProductFrameworkProject.Pages;
+using RelevantCodes.ExtentReports;
 using System;
 
 namespace ProductFramework.Test
@@ -13,6 +14,8 @@ namespace ProductFramework.Test
         [Obsolete]
         public void Test1()
         {
+            //Start Report
+            test = extent.StartTest("Test1"); //”SampleReporting” TestMethod name
             mp.menupage();
             mp.validation();
 
@@ -21,12 +24,28 @@ namespace ProductFramework.Test
             abp.aboutUsPage();
             cp.contactpage();
             fp.feedback();
+            test.Log(LogStatus.Pass, "Test Passed");
+            //Pass scenario
+            Assert.AreEqual(10, 10);
+            test.Log(LogStatus.Pass, "Test Passed");
+            //Fail scenario
+            Assert.IsTrue(false);
+            test.Log(LogStatus.Fail, "Test Failed");
 
         }
         [Test]
         public void Test2()
         {
+            //Start Report
+            test = extent.StartTest("Test1"); //”SampleReporting” TestMethod name
             sp.signinpage("prakash778@gmail.com", "123456");
+            test.Log(LogStatus.Pass, "Test Passed for invalid credentials");
+            //Pass scenario
+            Assert.AreEqual(10, 10);
+            test.Log(LogStatus.Pass, "Test Passed");
+            //Fail scenario
+            Assert.IsTrue(false);
+            test.Log(LogStatus.Fail, "Test Failed");
 
         }
  
